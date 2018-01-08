@@ -105,9 +105,7 @@ https://github.com/emrekenci/azure-functions-servicebus-sample).
 
 Now we'll create a logic app to deal with problematic tasks. If you're not familiar with Logic Apps, I suggest you [take a look](https://azure.microsoft.com/en-us/services/logic-apps/). It's like IFTTT for Devops on Azure.
 
-The message consumer will abandon the message if it receives an exception while trying to process it. When the number of times this happens exceeds the *MaxDeliveryCount* the message will be moved to the dead-letter sub-queue. To learn more about the dead-letter queue, check out [this article](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues).
-
-In this situation, we would typically code another app that listens to the DLQ, and either fixes the problem with the message or just notifies the team responsible.
+If the message/task cannot be completed after a certain number of tries, it will be sent to [the dead-letter queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues). In this situation, we would typically code another app that listens to the DLQ, and either fixes the problem with the message or just notifies the team responsible.
 
 It turns out, there is a way to do this without writing **_a single line of code_** on Azure. Here is how:
 
