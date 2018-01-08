@@ -23,3 +23,36 @@ The interesting thing about this approach isn't the architecture itself but how 
 
 ## Implementation guide
 
+We create two Azure Functions using Visual Studio. We **_could_** write the function code on the portal in Javascript or CSharp script but the samples I'll share are written in C# on Visual Studio.
+
+### HTTP Triggered Function
+
+Simply writes the request body to Service Bus Queue as a message. Here is the code:
+```csharp
+[FunctionName("enqueue")]
+public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "post")]HttpRequestMessage req, TraceWriter log)
+{
+    string requestBody = await req.Content.ReadAsStringAsync();
+
+    string serviceBusConnectionString = Environment.GetEnvironmentVariable("ServiceBusConnectionString", EnvironmentVariableTarget.Process);
+    string serviceBusQueueName = Environment.GetEnvironmentVariable("ServiceBusQueueName", EnvironmentVariableTarget.Process);
+
+    IQueueClient queueClient = new QueueClient(serviceBusConnectionString, serviceBusQueueName);
+
+    byte[] messageBytes = Encoding.ASCII.GetBytes(requestBody);
+
+    var message = new Message(messageBytes);
+
+    await queueClient.SendAsync(message);
+
+    return req.CreateResponse(HttpStatusCode.OK);
+}
+```
+Note that as soon as we deploy this function to Azure, we will have a functioning HTTP endpoint that's ready to be used. We didn't have to deal with:
+
+* Creating an API project
+* Setting up routing and the API endpoints
+* Writing API authentication code
+* Provisioning a web server or a web app.
+ 
+ ### Queue Triggered Funct,on.
