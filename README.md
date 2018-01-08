@@ -107,7 +107,7 @@ Now we'll create a logic app to deal with problematic tasks. If you're not famil
 
 If the message/task cannot be completed after a certain number of tries, it will be sent to [the dead-letter queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues). In this situation, we would typically code another app that listens to the DLQ, and either fixes the problem with the message or just notifies the team responsible.
 
-It turns out, there is a way to do this without writing **_a single line of code_** on Azure. Here is how:
+As it turns out, there is a way to do this without writing **_a single line of code_** on Azure. Here is how:
 
 ![Logic app service bus DLQ trigger](https://github.com/emrekenci/azure-serverless-async-task/raw/master/images/Logic%20App.png "Logic app service bus DLQ trigger")
 
