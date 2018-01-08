@@ -109,6 +109,8 @@ If the message/task cannot be completed after a certain number of tries, it will
 
 It turns out, there is a way to do this without writing **_a single line of code_** on Azure. Here is how:
 
+![Logic app service bus DLQ trigger](https://github.com/emrekenci/azure-serverless-async-task/raw/master/images/Logic%20App.png "Logic app service bus DLQ trigger")
+
 1. Go to Logic Apps blade on Azure and create a blank Logic App.
 2. Select ServiceBus in the list of connectors
 You will see two options:
@@ -119,13 +121,7 @@ The first option completes(deletes) the dead-letter queue after processing the m
 
 3. Select the first option and select the name of your queue from the list.
 4. Click show advanced options and select DeadLetter for queue type.
-
-![Logic app service bus DLQ trigger](https://github.com/emrekenci/azure-serverless-async-task/raw/master/images/Logic%20App%20Step%201.png "Logic app service bus DLQ trigger")
-
 5. Then click add condition. You should see a true false decision tree as above. While writing the condition you can refer to the properties of the message we received from the dead-letter queue. In the example above, we make a decision based on whether the message contains a piece of text as "taskType":"certainTaskType", a JSON snippet.
-
-![Logic app service bus DLQ trigger](https://github.com/emrekenci/azure-serverless-async-task/raw/master/images/Logic%20App%20Step%202.png "Logic app service bus DLQ trigger")
-
 6. If the condition is true, we'll call another Azure function and send some information about our message. Assume that it will take some remedying action. If the condition is false, then we send the dev team an email using a logic apps connector such as Office 365 or Gmail.
 
 ## Next steps
