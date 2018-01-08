@@ -28,7 +28,7 @@ We'll create two Azure Functions using Visual Studio. We **_could_** code the fu
 You can see the full solution for the functions [here](
 https://github.com/emrekenci/azure-functions-servicebus-sample).
 
-For some simplyfied code samples for Service Bus, you can check out [this repository](https://github.com/emrekenci/azure-servicebus-sample).
+For some simplified code samples for Service Bus, you can check out [this repository](https://github.com/emrekenci/azure-servicebus-sample).
 
 ### HTTP Triggered Function (Queue tasks)
 
