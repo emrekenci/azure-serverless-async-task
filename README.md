@@ -21,11 +21,16 @@ Here is an overview of what we’ll be covering:
 
 The interesting thing about this approach isn't the architecture itself but how little **_code & effort_**  it takes to implement this on Azure. The rest of the article describes the implementation details.
 
-## Implementation guide
+## Queueing and dequeueing functions
 
-We create two Azure Functions using Visual Studio. We **_could_** write the function code on the portal in Javascript or CSharp script but the samples I'll share are written in C# on Visual Studio.
+We'll create two Azure Functions using Visual Studio. We **_could_** code the functions on the portal in Javascript or C# Script but the samples I'll share are written in C# on Visual Studio.
 
-### HTTP Triggered Function
+You can see the full solution for the functions [here](
+https://github.com/emrekenci/azure-functions-servicebus-sample).
+
+For some simplyfied code samples for Service Bus, you can check out [this repository](https://github.com/emrekenci/azure-servicebus-sample).
+
+### HTTP Triggered Function (Queue tasks)
 
 Simply writes the request body to Service Bus Queue as a message. Here is the code:
 ```csharp
@@ -48,11 +53,16 @@ public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLeve
     return req.CreateResponse(HttpStatusCode.OK);
 }
 ```
-Note that as soon as we deploy this function to Azure, we will have a functioning HTTP endpoint that's ready to be used. We didn't have to deal with:
+The code above assumes your ServiceBus endpoint is already created. You can learn how to setup your ServiceBus Queue [here](
+https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dotnet-get-started-with-queues).
+
+Note that as soon as we deploy this function to Azure, we will have a functioning HTTP endpoint that's ready to be used.
+
+Here is what this function **_saves_** us from doing:
 
 * Creating an API project
 * Setting up routing and the API endpoints
 * Writing API authentication code
 * Provisioning a web server or a web app.
  
- ### Queue Triggered Funct,on.
+ ### Queue Triggered Function (Complete tasks)
